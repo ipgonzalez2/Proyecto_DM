@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="135dp"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/imageButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/imagen"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/imagen" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/addTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:drawableStart="@drawable/book"
+                        android:drawableTint="@color/colorPrimary"
+                        android:ems="10"
+                        android:hint="Introduce el nombre del libro"
+                        android:inputType="text"
+                        android:paddingLeft="20dp"
+                        android:textAlignment="center" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/addAuthor"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:drawableStart="@drawable/writer"
+                        android:drawableTint="@color/colorPrimary"
+                        android:ems="10"
+                        android:hint="Introduce de el/la escritor/a "
+                        android:inputType="text"
+                        android:paddingLeft="20dp"
+                        android:textAlignment="center" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Spinner
+                        android:id="@+id/spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="12dp"
+                        android:layout_weight="1"
+                        android:entries="@array/genero_array"
+                        android:scaleType="centerCrop" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Switch
+                        android:id="@+id/switchRead"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:drawableStart="@drawable/read"
+                        android:drawableTint="@color/colorPrimary"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:text="Libro leido"
+                        android:textAlignment="center" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layoutDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/bookDescription"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:drawableStart="@drawable/pencil"
+                        android:drawableTint="@color/colorPrimary"
+                        android:ems="10"
+                        android:hint="Introduce de el/la escritor/a "
+                        android:inputType="textMultiLine"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:textAlignment="center"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layoutRating"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center|center_horizontal"
+                    android:orientation="horizontal"
+                    android:textAlignment="center">
+
+                    <RatingBar
+                        android:id="@+id/ratingBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="false"
+                        android:layout_centerHorizontal="false"
+                        android:layout_centerVertical="false"
+                        android:layout_marginTop="10dp"
+                        android:numStars="5"
+                        android:rating="0"
+                        android:stepSize=".5"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/create"
+                        style="@style/Widget.AppCompat.Button.Small"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:background="@drawable/mybuttoncreate"
+                        android:backgroundTintMode="add"
+                        android:text="Añadir libro" />
+
+                    <Button
+                        android:id="@+id/cancelCreate"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:background="@drawable/mybuttoncreate"
+                        android:backgroundTintMode="add"
+                        android:text="Cancelar" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
