@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">BookKeep</string>
+    <string name="lbl_insertar">Insertar</string>
+</resources>
