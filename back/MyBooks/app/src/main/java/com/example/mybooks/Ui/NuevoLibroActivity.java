@@ -165,10 +165,13 @@ public class NuevoLibroActivity extends AppCompatActivity {
 
         DATOS.putExtra("titulo", ED_TITULO.getText().toString());
         DATOS.putExtra("autor", ED_AUTOR.getText().toString());
-        DATOS.putExtra("imagen", path);
+
         DATOS.putExtra("genero", GENERO);
         DATOS.putExtra("leido", LEIDO.isChecked());
-        SaveImage(bitmap);
+        if(estaImagen) {
+            DATOS.putExtra("imagen", path);
+            //SaveImage(bitmap);
+        }
         if(LEIDO.isChecked()){
             DATOS.putExtra("puntuacion", PUNTUACION.getRating());
             DATOS.putExtra("reseña", ED_RESEÑA.getText().toString() );

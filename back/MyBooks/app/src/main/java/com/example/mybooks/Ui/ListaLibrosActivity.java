@@ -3,15 +3,20 @@ package com.example.mybooks.Ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,6 +25,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.mybooks.Core.DBManager;
 import com.example.mybooks.Core.Libro;
 import com.example.mybooks.R;
+
+import java.io.File;
+import java.sql.SQLOutput;
 
 public class ListaLibrosActivity extends AppCompatActivity {
     private static String LOG_TAG = ListaLibrosActivity.class.getSimpleName();
@@ -30,7 +38,11 @@ public class ListaLibrosActivity extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lista_libros);
-
+       /* ImageView img = this.findViewById(R.id.booooook);
+        String path = "/storage/emulated/0/Download/el-libro-de-las-abejas.jpg";
+        File file = new File(path);
+        Bitmap bm = BitmapFactory.decodeFile(file.getPath());
+        img.setImageBitmap(bm);*/
         // Listeners
         //final Button BT_INSERTA = this.findViewById( R.id.btInserta );
         final ListView LV_LIBROS = this.findViewById( R.id.lvLibros );
@@ -46,9 +58,35 @@ public class ListaLibrosActivity extends AppCompatActivity {
                 this,
                 R.layout.entrada_libro,
                 null,
-                new String[]{ DBManager.CAMPO_GENERO, DBManager.CAMPO_LEIDO },
-                new int[]{ R.id.lblTitulo, R.id.lblAutor }
+                new String[]{ DBManager.CAMPO_TITULO, DBManager.CAMPO_AUTOR,DBManager.CAMPO_IMAGEN },
+                new int[]{ R.id.lblTitulo, R.id.lblAutor, R.id.bookImage }
         );
+
+
+        /*this.adaptador.setViewBinder(new SimpleCursorAdapter.ViewBinder() {
+            @Override
+            public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
+                if ( view.getId() == R.id.textView2 ){
+
+                    ImageView BT_IMAGEN_LISTA = view.findViewById(R.id.bookImage);
+                    TextView BT_TEXT = findViewById(R.id.textView2);
+                    BT_TEXT.setText("jejejejeej");
+                    String path = cursor.getString(cursor.getColumnIndex("imagen"));
+                    //File img = new File();
+                    //cursor.close();
+
+                    Bitmap bitmap = BitmapFactory.decodeFile("noe");
+                    BT_IMAGEN_LISTA.setBackgroundColor(0);
+                    //BT_IMAGEN_LISTA.setImageBitmap(bitmap);
+                    return true;
+                }else{
+                    return false;
+                }
+
+            }
+
+        });*/
+
 
         LV_LIBROS.setAdapter( this.adaptador );
 
@@ -57,6 +95,7 @@ public class ListaLibrosActivity extends AppCompatActivity {
         // Actualiza la vista
         this.muestraEstado();
     }
+
 
     @Override
     public void onResume()
@@ -166,6 +205,7 @@ public class ListaLibrosActivity extends AppCompatActivity {
             */
 
             this.dbManager.guarda( LIBRO_NUEVO );
+            Toast.makeText(this, data.getExtras().getString("imagen"),Toast.LENGTH_LONG).show();
         }
 
         return;
