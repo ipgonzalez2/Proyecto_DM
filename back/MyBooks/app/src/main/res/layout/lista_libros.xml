@@ -13,28 +13,41 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@drawable/mylist">
+        android:background="@drawable/mylist"
+        android:orientation="vertical">
 
         <EditText
             android:id="@+id/book_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
             android:autofillHints=""
+            android:drawableLeft="@drawable/search"
+            android:ems="10"
             android:hint="      Introduce el libro que deseas buscar"
-            android:inputType="text"
-            android:drawableLeft="@drawable/search"/>
+            android:inputType="text" />
 
         <ListView
             android:id="@+id/lvLibros"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent">
 
         </ListView>
 
-        <TextView android:id="@+id/lblLibros"
+        <TextView
+            android:id="@+id/lblLibros"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"></TextView>
     </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
+        app:srcCompat="@drawable/plus" />
+
 </RelativeLayout>

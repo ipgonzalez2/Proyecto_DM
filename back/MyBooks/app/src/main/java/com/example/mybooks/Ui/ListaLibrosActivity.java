@@ -1,6 +1,8 @@
 package com.example.mybooks.Ui;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -159,9 +161,18 @@ public class ListaLibrosActivity extends AppCompatActivity {
 
         switch( item.getItemId() ) {
             case R.id.opBorra:
-                int pos = ( (AdapterView.AdapterContextMenuInfo)
+                final int pos = ( (AdapterView.AdapterContextMenuInfo)
                         item.getMenuInfo() ).position;
-                this.borraNum( pos );
+                AlertDialog.Builder builder = new AlertDialog.Builder(ListaLibrosActivity.this);
+                builder.setMessage("¿Desea borrar este libro?");
+                builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ListaLibrosActivity.this.borraNum(pos);
+                    }
+                });
+                builder.setNegativeButton("Cancelar", null);
+                builder.create().show();
                 toret = true;
                 break;
         }
