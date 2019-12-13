@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 public class DBManager extends SQLiteOpenHelper {
-    private static int Version = 5;
+    private static int Version = 6;
     private static String Nombre = "libros";
     private static String LOG_TAG = "ORM";
     private static String TABLA_LIBROS = "libros";

@@ -162,6 +162,7 @@ public class ListaLibrosActivity extends AppCompatActivity {
                 int pos = ( (AdapterView.AdapterContextMenuInfo)
                         item.getMenuInfo() ).position;
                 this.borraNum( pos );
+                toret = true;
                 break;
         }
 
