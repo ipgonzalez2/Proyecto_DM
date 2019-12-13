@@ -12,7 +12,7 @@ public class DBManager extends SQLiteOpenHelper {
     private static int Version = 6;
     private static String Nombre = "libros";
     private static String LOG_TAG = "ORM";
-    private static String TABLA_LIBROS = "libros";
+    public static String TABLA_LIBROS = "libros";
     public static String CAMPO_ID = "_id";
     public static String CAMPO_TITULO = "titulo";
     public static String CAMPO_AUTOR = "autor";

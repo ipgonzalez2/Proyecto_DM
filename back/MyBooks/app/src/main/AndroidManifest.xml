@@ -24,6 +24,8 @@
         </activity>
         <activity android:name=".Ui.ListaLibrosActivity"></activity>
         <activity android:name=".Ui.NuevoLibroActivity"></activity>
+        <activity android:name=".Ui.ModificarLibroActivity"></activity>
+        <activity android:name=".Ui.VerLibroActivity"></activity>
     </application>
 
 </manifest>

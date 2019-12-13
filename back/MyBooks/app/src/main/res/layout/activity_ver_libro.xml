@@ -20,7 +20,7 @@
                 android:layout_height="135dp"
                 android:orientation="horizontal">
 
-                <ImageButton
+                <ImageView
                     android:id="@+id/btImagen"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -139,9 +139,30 @@
                         android:layout_centerVertical="false"
                         android:layout_marginTop="10dp"
                         android:numStars="5"
-                        android:rating="0"
+
                         android:stepSize=".5"
-                        tools:visibility="gone" />
+                        android:visibility="gone" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/btVerAtras"
+                        style="@style/Widget.AppCompat.Button.Small"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:background="@drawable/mybuttoncreate"
+                        android:backgroundTintMode="add"
+                        android:text="Atrás" />
 
                 </LinearLayout>
 

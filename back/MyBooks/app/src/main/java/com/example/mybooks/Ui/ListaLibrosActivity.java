@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -27,13 +28,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.mybooks.Core.DBManager;
 import com.example.mybooks.Core.Libro;
 import com.example.mybooks.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.File;
 import java.sql.SQLOutput;
+import java.util.List;
 
 public class ListaLibrosActivity extends AppCompatActivity {
     private static String LOG_TAG = ListaLibrosActivity.class.getSimpleName();
-    private static int RC_NUEVA_PRACTICA = 11;
+    private static int RC_NUEVO_LIBRO = 21;
+    private static int RC_MODIFICAR_LIBRO = 11;
+    private static int RC_VER_LIBRO = 31;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -64,33 +69,24 @@ public class ListaLibrosActivity extends AppCompatActivity {
                 new int[]{ R.id.lblTitulo, R.id.lblAutor, R.id.bookImage }
         );
 
+        FloatingActionButton añadirLibro = this.findViewById(R.id.añadirLibro);
 
-        /*this.adaptador.setViewBinder(new SimpleCursorAdapter.ViewBinder() {
+        añadirLibro.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
-                if ( view.getId() == R.id.textView2 ){
-
-                    ImageView BT_IMAGEN_LISTA = view.findViewById(R.id.bookImage);
-                    TextView BT_TEXT = findViewById(R.id.textView2);
-                    BT_TEXT.setText("jejejejeej");
-                    String path = cursor.getString(cursor.getColumnIndex("imagen"));
-                    //File img = new File();
-                    //cursor.close();
-
-                    Bitmap bitmap = BitmapFactory.decodeFile("noe");
-                    BT_IMAGEN_LISTA.setBackgroundColor(0);
-                    //BT_IMAGEN_LISTA.setImageBitmap(bitmap);
-                    return true;
-                }else{
-                    return false;
-                }
-
+            public void onClick(View v) {
+                ListaLibrosActivity.this.inserta();
             }
-
-        });*/
-
+        });
 
         LV_LIBROS.setAdapter( this.adaptador );
+
+        LV_LIBROS.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ListaLibrosActivity.this.ver(position);
+                //ListaLibrosActivity.this.startActivityForResult( new Intent( ListaLibrosActivity.this, VerLibroActivity.class ), RC_VER_LIBRO );
+            }
+        });
 
         this.registerForContextMenu( LV_LIBROS );
 
@@ -135,9 +131,6 @@ public class ListaLibrosActivity extends AppCompatActivity {
         boolean toret = false;
 
         switch( item.getItemId() ) {
-            case R.id.opInserta:
-                this.inserta();
-                break;
             case R.id.opSalir:
                 this.finish();
                 break;
@@ -175,6 +168,10 @@ public class ListaLibrosActivity extends AppCompatActivity {
                 builder.create().show();
                 toret = true;
                 break;
+            case R.id.opModifica:
+                this.startActivityForResult( new Intent( this, ModificarLibroActivity.class ), RC_MODIFICAR_LIBRO );
+                break;
+
         }
 
         return toret;
@@ -183,7 +180,7 @@ public class ListaLibrosActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
     {
-        if ( requestCode == RC_NUEVA_PRACTICA
+        if ( requestCode == RC_NUEVO_LIBRO
                 && resultCode == Activity.RESULT_OK )
         {
             System.out.println(this.dbManager.getAllCursor());
@@ -226,7 +223,7 @@ public class ListaLibrosActivity extends AppCompatActivity {
 
     private void inserta()
     {
-        this.startActivityForResult( new Intent( this, NuevoLibroActivity.class ), RC_NUEVA_PRACTICA );
+        this.startActivityForResult( new Intent( this, NuevoLibroActivity.class ), RC_NUEVO_LIBRO );
     }
 
     private void borraNum(int pos)
@@ -251,6 +248,47 @@ public class ListaLibrosActivity extends AppCompatActivity {
                 Integer.toString( this.adaptador.getCount() )
                         + " tarea(s)."
         );
+    }
+
+    private void ver(int possition){
+        Cursor cursor = this.adaptador.getCursor();
+        cursor.moveToPosition(possition);
+        int id = cursor.getInt(cursor.getColumnIndexOrThrow(dbManager.CAMPO_ID));
+        SQLiteDatabase db = dbManager.getReadableDatabase();
+        cursor = db.query(dbManager.TABLA_LIBROS, null, dbManager.CAMPO_ID+" = ?",new String[]{String.valueOf(id)},null,null,null);
+        if(cursor.moveToFirst()){
+            String titulo = cursor.getString(1);
+            String autor = cursor.getString(2);
+            String imagen = cursor.getString(3);
+            String genero = cursor.getString(4);
+            int leido = cursor.getInt(5);
+            Intent myIntent = new Intent(ListaLibrosActivity.this,VerLibroActivity.class);
+            myIntent.putExtra("titulo",titulo);
+            myIntent.putExtra("autor",autor);
+            myIntent.putExtra("imagen",imagen);
+            myIntent.putExtra("genero",genero);
+            myIntent.putExtra("leido",leido);
+            if(leido == 1){
+                String reseña = cursor.getString(6);
+                String puntuacion = cursor.getString(7);
+                myIntent.putExtra("reseña",reseña);
+                myIntent.putExtra("puntuacion",puntuacion);
+                Toast.makeText(ListaLibrosActivity.this, puntuacion, Toast.LENGTH_LONG).show();
+            }
+
+
+            //Toast.makeText(ListaLibrosActivity.this, puntuacion, Toast.LENGTH_LONG).show();
+            ListaLibrosActivity.this.startActivity(myIntent);
+
+
+        }else{
+            Toast.makeText(ListaLibrosActivity.this, "ERROR!!", Toast.LENGTH_LONG).show();
+        }
+
+
+
+
+
     }
 
     private SimpleCursorAdapter adaptador;

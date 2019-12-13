@@ -40,71 +40,39 @@ public class MainActivity extends AppCompatActivity {
     private static int RC_NUEVO_LIBRO = 21;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         // Listeners
-        final Button BT_LISTA_LIBROS = this.findViewById( R.id.btListaLibros );
+        final Button BT_LISTA_LIBROS = this.findViewById(R.id.btListaLibros);
         final Button BT_INSERTA_PRINCIPAL = this.findViewById(R.id.btInsertaPrincipal);
 
         BT_LISTA_LIBROS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               MainActivity.this.llamarLista();
+                MainActivity.this.llamarLista();
             }
         });
 
         BT_INSERTA_PRINCIPAL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.this.insertarLibro();
+                System.exit(0);
+                ;
             }
         });
 
     }
 
     @Override
-    public void onResume()
-    {
+    public void onResume() {
         super.onResume();
     }
 
-/*
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
-    {
-        if ( requestCode == RC_NUEVO_LIBRO
-                && resultCode == Activity.RESULT_OK )
-        {
-            System.out.println(this.dbManager.getAllCursor());
-            final Libro LIBRO_NUEVO =
-                    new Libro(
-                            data.getExtras().getString( "titulo" ),
-                            data.getExtras().getString( "autor" ),
-                            data.getExtras().getString( "imagen" ),
-                            Libro.Genero.ROMANTICA,
-                            data.getExtras().getBoolean( "leido" ),
-                            data.getExtras().getString( "reseña" ),
-                            data.getExtras().getDouble( "puntuacion" ));
 
-
-            this.dbManager.guarda( LIBRO_NUEVO );
-        }
-
-        return;
-    }*/
-
-
-
-    private void llamarLista()
-    {
-        this.startActivity( new Intent( this, ListaLibrosActivity.class ));
+    private void llamarLista() {
+        this.startActivity(new Intent(this, ListaLibrosActivity.class));
     }
 
-    private void insertarLibro()
-    {
-        this.startActivityForResult( new Intent( this, NuevoLibroActivity.class ), RC_NUEVO_LIBRO );
-    }
 }
