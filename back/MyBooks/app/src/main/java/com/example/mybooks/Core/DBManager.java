@@ -132,4 +132,24 @@ public class DBManager extends SQLiteOpenHelper {
                 null, null, null, null, null, null
         );
     }
+
+    public Cursor searchBook(String titulo_autor){
+
+        Cursor mCursor = null;
+        SQLiteDatabase db = this.getReadableDatabase();
+        if (titulo_autor == null  ||  titulo_autor.length () == 0)  {
+            mCursor = db.query(TABLA_LIBROS, null,
+                    null, null, null, null, null);
+
+        }
+        else {
+            mCursor = db.query(true, TABLA_LIBROS, null,
+                    CAMPO_TITULO + " like '%" + titulo_autor + "%' or " + CAMPO_AUTOR + " like '%" + titulo_autor + "%'", null,
+                    null, null, null, null);
+        }
+        if (mCursor != null) {
+            mCursor.moveToFirst();
+        }
+        return mCursor;
+    }
 }

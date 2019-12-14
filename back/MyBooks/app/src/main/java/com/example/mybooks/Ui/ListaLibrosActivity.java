@@ -9,12 +9,16 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.FilterQueryProvider;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
@@ -53,6 +57,24 @@ public class ListaLibrosActivity extends AppCompatActivity {
         // Listeners
         //final Button BT_INSERTA = this.findViewById( R.id.btInserta );
         final ListView LV_LIBROS = this.findViewById( R.id.lvLibros );
+        final EditText ED_BUSCAR = this.findViewById(R.id.book_search);
+
+        ED_BUSCAR.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                adaptador.getFilter().filter(s.toString());
+            }
+        });
 
         /*BT_INSERTA.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +90,13 @@ public class ListaLibrosActivity extends AppCompatActivity {
                 new String[]{ DBManager.CAMPO_TITULO, DBManager.CAMPO_AUTOR,DBManager.CAMPO_IMAGEN },
                 new int[]{ R.id.lblTitulo, R.id.lblAutor, R.id.bookImage }
         );
+
+        adaptador.setFilterQueryProvider(new FilterQueryProvider() {
+            @Override
+            public Cursor runQuery(CharSequence constraint) {
+                return dbManager.searchBook(constraint.toString());
+            }
+        });
 
         FloatingActionButton añadirLibro = this.findViewById(R.id.añadirLibro);
 
