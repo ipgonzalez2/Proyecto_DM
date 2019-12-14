@@ -2,6 +2,7 @@ package com.example.mybooks.Ui;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -160,6 +161,74 @@ public class ListaLibrosActivity extends AppCompatActivity {
         boolean toret = false;
 
         switch( item.getItemId() ) {
+            case R.id.opLeidos:
+                this.adaptador.changeCursor(this.dbManager.getLeidosCursor());
+                this.adaptador.setFilterQueryProvider(new FilterQueryProvider() {
+                    @Override
+                    public Cursor runQuery(CharSequence constraint) {
+                        return dbManager.searchBookLeidos(constraint.toString(), 1);
+                    }
+                });
+                break;
+            case R.id.opTodos:
+                this.adaptador.changeCursor(this.dbManager.getAllCursor());
+                this.adaptador.setFilterQueryProvider(new FilterQueryProvider() {
+                    @Override
+                    public Cursor runQuery(CharSequence constraint) {
+                        return dbManager.searchBook(constraint.toString());
+                    }
+                });
+                break;
+            case R.id.opPendientes:
+                this.adaptador.changeCursor(this.dbManager.getPendientesCursor());
+                this.adaptador.setFilterQueryProvider(new FilterQueryProvider() {
+                    @Override
+                    public Cursor runQuery(CharSequence constraint) {
+                        return dbManager.searchBookLeidos(constraint.toString(), 0);
+                    }
+                });
+                break;
+            case R.id.opResumen:
+                Dialog alert = new Dialog(ListaLibrosActivity.this);
+                alert.setContentView(R.layout.custom_dialog);
+
+                TextView LBL_LEIDOS = alert.findViewById(R.id.lblNumLeidos);
+                TextView LBL_PENDIENTES = alert.findViewById(R.id.lblNumPendientes);
+                TextView LBL_GENERO_FAVORITO = alert.findViewById(R.id.lblGenero);
+                TextView LBL_VALORACION = alert.findViewById(R.id.lblValoracion);
+
+                SQLiteDatabase db = ListaLibrosActivity.this.dbManager.getReadableDatabase();
+                String[] datos = {"COUNT("+DBManager.CAMPO_LEIDO+")"};
+                Cursor cursor = db.rawQuery("SELECT COUNT(*), AVG(puntuacion) from libros where leido = ?", new String[]{"1"});
+
+                if(cursor.moveToFirst()){
+                    LBL_LEIDOS.setText("Num. leídos: " + cursor.getString(0));
+                    int numPendientes = ListaLibrosActivity.this.adaptador.getCount() - Integer.parseInt(cursor.getString(0));
+                    LBL_PENDIENTES.setText("Num. pendientes: " + Integer.toString(numPendientes));
+                    LBL_VALORACION.setText("Valoración media: " + Double.toString(cursor.getDouble(1)));
+                }
+
+                Cursor cursor1 = db.rawQuery("SELECT genero,COUNT(*) from libros group by genero", new String[]{});
+                String genero = "";
+                int numMax = 0;
+
+                if(cursor1.moveToFirst()){
+                    do {
+                        if(Integer.parseInt(cursor1.getString(1)) > numMax){
+                            numMax = Integer.parseInt(cursor1.getString(1));
+                            genero = cursor1.getString(0);
+                        }else if(Integer.parseInt(cursor1.getString(1)) == numMax){
+                            if(numMax>0){
+                                genero = genero.concat(", " + cursor1.getString(0));
+                            }
+                        }
+                    } while(cursor1.moveToNext());
+                }
+
+                LBL_GENERO_FAVORITO.setText("Genero(s) favorito: "+ genero);
+
+                alert.show();
+                break;
             case R.id.opSalir:
                 this.finish();
                 break;

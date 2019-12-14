@@ -129,9 +129,27 @@ public class DBManager extends SQLiteOpenHelper {
     {
         return this.getReadableDatabase().query(
                 TABLA_LIBROS,
-                null, null, null, null, null, null
+                null, null, null, null, null, "-" + CAMPO_PUNTUACION + " ASC"
         );
     }
+
+
+    public Cursor getLeidosCursor()
+    {
+        return this.getReadableDatabase().query(
+                TABLA_LIBROS,
+                null, CAMPO_LEIDO + "=" + 1, null, null, null, "-" + CAMPO_PUNTUACION + " ASC"
+        );
+    }
+
+    public Cursor getPendientesCursor()
+    {
+        return this.getReadableDatabase().query(
+                TABLA_LIBROS,
+                null, CAMPO_LEIDO + "=" + 0, null, null, null, null
+        );
+    }
+
 
     public Cursor searchBook(String titulo_autor){
 
@@ -139,13 +157,33 @@ public class DBManager extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         if (titulo_autor == null  ||  titulo_autor.length () == 0)  {
             mCursor = db.query(TABLA_LIBROS, null,
-                    null, null, null, null, null);
+                    null, null, null, null, "-" + CAMPO_PUNTUACION + " ASC");
 
         }
         else {
             mCursor = db.query(true, TABLA_LIBROS, null,
                     CAMPO_TITULO + " like '%" + titulo_autor + "%' or " + CAMPO_AUTOR + " like '%" + titulo_autor + "%'", null,
-                    null, null, null, null);
+                    null, null, "-" + CAMPO_PUNTUACION + " ASC", null);
+        }
+        if (mCursor != null) {
+            mCursor.moveToFirst();
+        }
+        return mCursor;
+    }
+
+    public Cursor searchBookLeidos(String titulo_autor, int leido){
+
+        Cursor mCursor = null;
+        SQLiteDatabase db = this.getReadableDatabase();
+        if (titulo_autor == null  ||  titulo_autor.length () == 0)  {
+            mCursor = db.query(TABLA_LIBROS, null,
+                    CAMPO_LEIDO + "=" + leido, null, null, null, "-" + CAMPO_PUNTUACION + " ASC");
+
+        }
+        else {
+            mCursor = db.query(true, TABLA_LIBROS, null,
+                    "(" +CAMPO_TITULO + " like '%" + titulo_autor + "%' or " + CAMPO_AUTOR + " like '%" + titulo_autor + "%') AND "+ CAMPO_LEIDO + "=" + leido, null,
+                    null, null, "-" + CAMPO_PUNTUACION + " ASC", null);
         }
         if (mCursor != null) {
             mCursor.moveToFirst();

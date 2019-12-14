@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/opTodos" android:title="Ver todos" />
+    <item android:id="@+id/opLeidos" android:title="Ver leídos" />
+    <item android:id="@+id/opPendientes" android:title="Ver pendientes" />
+    <item android:id="@+id/opResumen" android:title="Mi resumen" />
     <item android:id="@+id/opSalir" android:title="Salir" />
 </menu>
