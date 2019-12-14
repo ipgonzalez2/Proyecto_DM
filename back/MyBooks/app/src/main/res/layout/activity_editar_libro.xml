@@ -39,17 +39,18 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <EditText
+                    <TextView
                         android:id="@+id/edTitulo"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_margin="10dp"
                         android:layout_weight="1"
+                        android:background="@drawable/border_botton"
                         android:drawableStart="@drawable/book"
                         android:drawableTint="@color/colorPrimary"
                         android:ems="10"
-                        android:hint="Introduce el nombre del libro"
                         android:inputType="text"
+                        android:paddingVertical="5dp"
                         android:paddingLeft="20dp"
                         android:textAlignment="center" />
                 </LinearLayout>
@@ -59,17 +60,18 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <EditText
+                    <TextView
                         android:id="@+id/edAutor"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="10dp"
                         android:layout_weight="1"
+                        android:background="@drawable/border_botton"
                         android:drawableStart="@drawable/writer"
                         android:drawableTint="@color/colorPrimary"
                         android:ems="10"
-                        android:hint="Introduce de el/la escritor/a "
                         android:inputType="text"
+                        android:paddingVertical="5dp"
                         android:paddingLeft="20dp"
                         android:textAlignment="center" />
                 </LinearLayout>
@@ -79,14 +81,20 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <Spinner
-                        android:id="@+id/spinnerGenero"
+                    <TextView
+                        android:id="@+id/edTematica"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="12dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp"
                         android:layout_weight="1"
-                        android:entries="@array/genero_array"
-                        android:scaleType="centerCrop" />
+                        android:background="@drawable/border_botton"
+                        android:drawableStart="@drawable/read"
+                        android:drawableTint="@color/colorPrimary"
+                        android:ems="10"
+                        android:inputType="text"
+                        android:paddingVertical="5dp"
+                        android:paddingLeft="20dp"
+                        android:textAlignment="center" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -161,7 +169,7 @@
                     android:orientation="vertical">
 
                     <Button
-                        android:id="@+id/btInsertaLibro"
+                        android:id="@+id/btModificaLibro"
                         style="@style/Widget.AppCompat.Button.Small"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
@@ -171,7 +179,7 @@
                         android:layout_marginBottom="20dp"
                         android:background="@drawable/mybuttoncreate"
                         android:backgroundTintMode="add"
-                        android:text="Añadir libro" />
+                        android:text="Modificar libro" />
 
                     <Button
                         android:id="@+id/btCancelaInsercion"
