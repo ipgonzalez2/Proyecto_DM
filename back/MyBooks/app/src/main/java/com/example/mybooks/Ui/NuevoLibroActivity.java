@@ -163,7 +163,7 @@ public class NuevoLibroActivity extends AppCompatActivity {
             DATOS.putExtra("imagen", path);
             //SaveImage(bitmap);
         }else{
-            DATOS.putExtra("imagen", "null");
+            DATOS.putExtra("imagen", "/storage/emulated/0/Download/438.gif");
         }
         if(LEIDO.isChecked()){
             DATOS.putExtra("puntuacion", PUNTUACION.getRating());
