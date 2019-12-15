@@ -52,16 +52,6 @@ public class NuevoLibroActivity extends AppCompatActivity {
         BT_IMAGEN = this.findViewById(R.id.btImagen);
         estaImagen = false;
 
-        String nombreDirectorioPublico = "imagen";
-        File file = crearDirectorioPublico(this,nombreDirectorioPublico);
-
-        if (!file.exists()) {
-            file.mkdir();
-            Log.i("direr", "se creo -- " + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES));
-        }else{
-            Log.i("direr","esta creado -- " + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES));
-        }
-
         BT_CANCELA.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -168,11 +158,12 @@ public class NuevoLibroActivity extends AppCompatActivity {
 
         DATOS.putExtra("genero", GENERO);
         DATOS.putExtra("leido", LEIDO.isChecked());
+
         if(estaImagen) {
             DATOS.putExtra("imagen", path);
             //SaveImage(bitmap);
         }else{
-            DATOS.putExtra("imagen", "null");
+            DATOS.putExtra("imagen", "/storage/emulated/0/Download/438.gif");
         }
         if(LEIDO.isChecked()){
             DATOS.putExtra("puntuacion", PUNTUACION.getRating());
@@ -181,53 +172,9 @@ public class NuevoLibroActivity extends AppCompatActivity {
             DATOS.putExtra("puntuacion", 20);
             DATOS.putExtra("reseña", "");
         }
-
-
-
+        Toast.makeText(NuevoLibroActivity.this, "ruta"+path,Toast.LENGTH_LONG).show();
         this.setResult( Activity.RESULT_OK, DATOS );
         this.finish();
-    }
-
-    public File crearDirectorioPublico(Context context, String nombreDirectorio) {
-        File directorio =new File(
-                context.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
-                nombreDirectorio);
-        return directorio;
-    }
-
-    public void SaveImage( Bitmap ImageToSave) {
-
-        File dir = file;//Carpeta donde se guarda
-        File fichero = new File(path);//Fichero a guardar
-
-        if (!dir.exists()) {
-            dir.mkdirs();
-        }
-
-        File paraGuardar = new File(dir, fichero.getName());//Fichero donde se guarda
-
-        try {
-            FileOutputStream fOut = new FileOutputStream(paraGuardar);
-
-            ImageToSave.compress(Bitmap.CompressFormat.JPEG, 85, fOut);
-            fOut.flush();
-            fOut.close();
-            AbleToSave();
-        }
-        catch(FileNotFoundException e) {
-            UnableToSave();
-        }
-        catch(IOException e) {
-            UnableToSave();
-        }
-    }
-
-    private void UnableToSave() {
-        Toast.makeText(NuevoLibroActivity.this, "¡No se ha podido guardar la imagen!", Toast.LENGTH_SHORT).show();
-    }
-
-    private void AbleToSave() {
-        Toast.makeText(NuevoLibroActivity.this, "Imagen guardada", Toast.LENGTH_SHORT).show();
     }
 
 }

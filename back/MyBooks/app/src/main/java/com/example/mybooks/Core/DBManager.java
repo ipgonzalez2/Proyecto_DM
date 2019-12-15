@@ -190,4 +190,53 @@ public class DBManager extends SQLiteOpenHelper {
         }
         return mCursor;
     }
+
+    public void modifica(Libro l, int id)
+    {
+        final SQLiteDatabase DB = this.getWritableDatabase();
+        final ContentValues VALUES = new ContentValues();
+        Cursor cursor = null;
+        // Asignar los valores de los datos
+
+        VALUES.put( CAMPO_TITULO, l.getTitulo() );
+        VALUES.put( CAMPO_AUTOR, l.getAutor() );
+        VALUES.put( CAMPO_IMAGEN, l.getImagen());
+        VALUES.put( CAMPO_GENERO, l.getGenero().toString());
+        int leido = l.isLeido() ? 1 : 0;
+        VALUES.put( CAMPO_LEIDO, leido);
+        if(l.isLeido()) {
+            VALUES.put( CAMPO_RESENHA, l.getReseña());
+            VALUES.put( CAMPO_PUNTUACION, l.getPuntuacion());
+        }
+        try {
+            DB.beginTransaction();
+            cursor = DB.query( TABLA_LIBROS,
+                    null,
+                    CAMPO_ID + "=?",
+                    new String[]{String.valueOf(id)},
+                    null, null, null, null );
+
+            if ( cursor.getCount() > 0 ) {
+                DB.update( TABLA_LIBROS,
+                        VALUES, CAMPO_ID + "= ?", new String[]{String.valueOf(id)} );
+            } else {
+                DB.insert( TABLA_LIBROS, null, VALUES );
+            }
+
+            DB.setTransactionSuccessful();
+           // toret = true;
+        } catch(SQLException exc)
+        {
+            Log.e( "DBManager.MODIFICA", exc.getMessage() );
+        }
+        finally {
+            if ( cursor != null ) {
+                cursor.close();
+            }
+
+            DB.endTransaction();
+        }
+
+        return;
+    }
 }

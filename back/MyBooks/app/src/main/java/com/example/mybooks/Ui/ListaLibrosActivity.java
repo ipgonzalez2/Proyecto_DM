@@ -3,6 +3,7 @@ package com.example.mybooks.Ui;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -113,7 +114,7 @@ public class ListaLibrosActivity extends AppCompatActivity {
         LV_LIBROS.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ListaLibrosActivity.this.ver(position);
+                ListaLibrosActivity.this.ver(position, 0);
                 //ListaLibrosActivity.this.startActivityForResult( new Intent( ListaLibrosActivity.this, VerLibroActivity.class ), RC_VER_LIBRO );
             }
         });
@@ -267,7 +268,10 @@ public class ListaLibrosActivity extends AppCompatActivity {
                 toret = true;
                 break;
             case R.id.opModifica:
-                this.startActivityForResult( new Intent( this, ModificarLibroActivity.class ), RC_MODIFICAR_LIBRO );
+                final int position = ( (AdapterView.AdapterContextMenuInfo)
+                        item.getMenuInfo() ).position;
+                ListaLibrosActivity.this.ver(position, 1);
+                //this.startActivityForResult( new Intent( this, ModificarLibroActivity.class ), RC_MODIFICAR_LIBRO );
                 break;
 
         }
@@ -300,19 +304,31 @@ public class ListaLibrosActivity extends AppCompatActivity {
                             data.getExtras().getString( "reseña" ),
                             data.getExtras().getFloat("puntuacion"));
 
-            /*
-            // Ya no es necesario guardar en preferencias
-            final SharedPreferences PREFS = this.getSharedPreferences( "prefs", MODE_PRIVATE );
-            final SharedPreferences.Editor EDIT_PREFS = this.getSharedPreferences( "prefs", MODE_PRIVATE ).edit();
-            final Set<String> PRACTICAS = PREFS.getStringSet( "practicas", new HashSet<String>() );
-
-            PRACTICAS.add( PRACTICA_NUEVA.toString() );
-            EDIT_PREFS.putStringSet( "practicas", PRACTICAS );
-            EDIT_PREFS.apply();
-            */
-
             this.dbManager.guarda( LIBRO_NUEVO );
-            Toast.makeText(this, data.getExtras().getString("imagen"),Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, data.getExtras().getString("imagen"),Toast.LENGTH_LONG).show();
+        }else{
+            if(requestCode == RC_MODIFICAR_LIBRO
+                    && resultCode == Activity.RESULT_OK){
+                Libro.Genero genero = Libro.Genero.OTRO;
+
+                if(data.getExtras().getInt("genero") > 0){
+                    genero = Libro.Genero.values()[data.getExtras().getInt("genero")];
+                }
+
+
+                final Libro LIBRO_NUEVO =
+                        new Libro(
+                                data.getExtras().getString( "titulo" ),
+                                data.getExtras().getString( "autor" ),
+                                data.getExtras().getString( "imagen" ),
+                                genero,
+                                data.getExtras().getBoolean( "leido" ),
+                                data.getExtras().getString( "reseña" ),
+                                data.getExtras().getFloat("puntuacion"));
+
+                this.dbManager.modifica( LIBRO_NUEVO, data.getExtras().getInt("id") );
+
+            }
         }
 
         return;
@@ -348,24 +364,41 @@ public class ListaLibrosActivity extends AppCompatActivity {
         );
     }
 
-    private void ver(int possition){
+    private void ver(int possition, int funcion){
         Cursor cursor = this.adaptador.getCursor();
         cursor.moveToPosition(possition);
         int id = cursor.getInt(cursor.getColumnIndexOrThrow(dbManager.CAMPO_ID));
         SQLiteDatabase db = dbManager.getReadableDatabase();
         cursor = db.query(dbManager.TABLA_LIBROS, null, dbManager.CAMPO_ID+" = ?",new String[]{String.valueOf(id)},null,null,null);
         if(cursor.moveToFirst()){
+            //int idLibro = id;
+
+
             String titulo = cursor.getString(1);
             String autor = cursor.getString(2);
             String imagen = cursor.getString(3);
             String genero = cursor.getString(4);
             int leido = cursor.getInt(5);
-            Intent myIntent = new Intent(ListaLibrosActivity.this,VerLibroActivity.class);
+            Intent myIntent;
+            if(funcion==0){
+                 myIntent = new Intent(ListaLibrosActivity.this,VerLibroActivity.class);
+            }else{
+                 myIntent = new Intent(ListaLibrosActivity.this,ModificarLibroActivity.class);
+            }
+            myIntent.putExtra("id",id);
+
+
+
             myIntent.putExtra("titulo",titulo);
             myIntent.putExtra("autor",autor);
+
             myIntent.putExtra("imagen",imagen);
             myIntent.putExtra("genero",genero);
             myIntent.putExtra("leido",leido);
+
+            Toast.makeText(ListaLibrosActivity.this, "noelias" +id,Toast.LENGTH_LONG).show();
+            Toast.makeText(ListaLibrosActivity.this, "la" +myIntent.getExtras().getString("imagen"),Toast.LENGTH_LONG).show();
+
             if(leido == 1){
                 String reseña = cursor.getString(6);
                 String puntuacion = cursor.getString(7);
@@ -376,17 +409,16 @@ public class ListaLibrosActivity extends AppCompatActivity {
 
 
             //Toast.makeText(ListaLibrosActivity.this, puntuacion, Toast.LENGTH_LONG).show();
-            ListaLibrosActivity.this.startActivity(myIntent);
+            if(funcion == 0){
+                ListaLibrosActivity.this.startActivity(myIntent);
+            }else{
+                ListaLibrosActivity.this.startActivityForResult(myIntent,ListaLibrosActivity.this.RC_MODIFICAR_LIBRO);
+            }
 
 
         }else{
             Toast.makeText(ListaLibrosActivity.this, "ERROR!!", Toast.LENGTH_LONG).show();
         }
-
-
-
-
-
     }
 
     private SimpleCursorAdapter adaptador;
