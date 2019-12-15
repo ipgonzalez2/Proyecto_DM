@@ -386,8 +386,7 @@ public class ListaLibrosActivity extends AppCompatActivity {
                  myIntent = new Intent(ListaLibrosActivity.this,ModificarLibroActivity.class);
             }
             myIntent.putExtra("id",id);
-            Toast.makeText(ListaLibrosActivity.this, "noelias" +id,Toast.LENGTH_LONG).show();
-            Toast.makeText(ListaLibrosActivity.this, "el id es" +myIntent.getExtras().getInt("id"),Toast.LENGTH_LONG).show();
+
 
 
             myIntent.putExtra("titulo",titulo);
@@ -396,6 +395,9 @@ public class ListaLibrosActivity extends AppCompatActivity {
             myIntent.putExtra("imagen",imagen);
             myIntent.putExtra("genero",genero);
             myIntent.putExtra("leido",leido);
+
+            Toast.makeText(ListaLibrosActivity.this, "noelias" +id,Toast.LENGTH_LONG).show();
+            Toast.makeText(ListaLibrosActivity.this, "la" +myIntent.getExtras().getString("imagen"),Toast.LENGTH_LONG).show();
 
             if(leido == 1){
                 String reseña = cursor.getString(6);

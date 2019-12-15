@@ -35,8 +35,8 @@ public class ModificarLibroActivity extends AppCompatActivity {
     File file;
     String path;
     Bitmap bitmap;
-    ImageButton BT_IMAGEN;
     boolean estaImagen;
+    ImageButton imagen;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,7 +44,7 @@ public class ModificarLibroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editar_libro);
         final Intent datos = this.getIntent();
-        ImageButton imagen = this.findViewById(R.id.btImagen);
+         imagen = this.findViewById(R.id.btImagen);
         TextView titulo = this.findViewById(R.id.edTitulo);
         TextView autor = this.findViewById(R.id.edAutor);
         TextView genero = this.findViewById(R.id.edTematica);
@@ -143,7 +143,7 @@ public class ModificarLibroActivity extends AppCompatActivity {
             path = cursor.getString(cursor.getColumnIndex(fillPath[0]));
             cursor.close();
             bitmap = BitmapFactory.decodeFile(path);
-            BT_IMAGEN.setImageBitmap(bitmap);
+            imagen.setImageBitmap(bitmap);
             estaImagen = true;
 
         }
@@ -172,13 +172,13 @@ public class ModificarLibroActivity extends AppCompatActivity {
         DATOS.putExtra("genero", GENERO.getText().toString());
         DATOS.putExtra("leido", LEIDO.isChecked());
         DATOS.putExtra("id",datos.getExtras().getInt("id"));
-        Toast.makeText(ModificarLibroActivity.this, "siguen siento"+datos.getExtras().getString("id"),Toast.LENGTH_LONG).show();
+        Toast.makeText(ModificarLibroActivity.this, "siguen siento"+datos.getExtras().getString("imagen"),Toast.LENGTH_LONG).show();
 
         if(estaImagen) {
             DATOS.putExtra("imagen", path);
             //SaveImage(bitmap);
         }else{
-            DATOS.putExtra("imagen", "null");
+            DATOS.putExtra("imagen",datos.getExtras().getString("imagen") );
         }
         if(LEIDO.isChecked()){
             DATOS.putExtra("puntuacion", PUNTUACION.getRating());

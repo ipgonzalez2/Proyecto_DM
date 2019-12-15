@@ -158,6 +158,7 @@ public class NuevoLibroActivity extends AppCompatActivity {
 
         DATOS.putExtra("genero", GENERO);
         DATOS.putExtra("leido", LEIDO.isChecked());
+
         if(estaImagen) {
             DATOS.putExtra("imagen", path);
             //SaveImage(bitmap);
@@ -171,7 +172,7 @@ public class NuevoLibroActivity extends AppCompatActivity {
             DATOS.putExtra("puntuacion", 20);
             DATOS.putExtra("reseña", "");
         }
-
+        Toast.makeText(NuevoLibroActivity.this, "ruta"+path,Toast.LENGTH_LONG).show();
         this.setResult( Activity.RESULT_OK, DATOS );
         this.finish();
     }
