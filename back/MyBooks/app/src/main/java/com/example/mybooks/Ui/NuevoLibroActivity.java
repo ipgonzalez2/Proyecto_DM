@@ -12,6 +12,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -41,6 +43,10 @@ public class NuevoLibroActivity extends AppCompatActivity {
     String path;
     Bitmap bitmap;
     ImageButton BT_IMAGEN;
+    EditText ED_TITULO;
+    EditText ED_AUTOR;
+    Switch LEIDO;
+    EditText ED_RESEÑA;
     boolean estaImagen;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +55,11 @@ public class NuevoLibroActivity extends AppCompatActivity {
 
         final Button BT_INSERTA = this.findViewById(R.id.btInsertaLibro);
         final Button BT_CANCELA = this.findViewById(R.id.btCancelaInsercion);
+        ED_TITULO = this.findViewById( R.id.edTitulo );
+        ED_AUTOR = this.findViewById( R.id.edAutor );
+        LEIDO = this.findViewById(R.id.switchRead);
+        ED_RESEÑA = this.findViewById(R.id.edReseña);
+
         BT_IMAGEN = this.findViewById(R.id.btImagen);
         estaImagen = false;
 
@@ -65,6 +76,62 @@ public class NuevoLibroActivity extends AppCompatActivity {
                 NuevoLibroActivity.this.guarda();
             }
         });
+
+        BT_INSERTA.setEnabled(false);
+
+        ED_TITULO.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                BT_INSERTA.setEnabled(((ED_TITULO.getText().toString().trim().length()>0 && ED_AUTOR.getText().toString().trim().length()>0) && !LEIDO.isChecked())
+                        ||((ED_TITULO.getText().toString().trim().length()>0 && ED_AUTOR.getText().toString().trim().length()>0) && LEIDO.isChecked() && ED_RESEÑA.getText().toString().trim().length()>0));
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                BT_INSERTA.setEnabled(((ED_TITULO.getText().toString().trim().length()>0 && ED_AUTOR.getText().toString().trim().length()>0) && !LEIDO.isChecked())
+                        ||((ED_TITULO.getText().toString().trim().length()>0 && ED_AUTOR.getText().toString().trim().length()>0) && LEIDO.isChecked() && ED_RESEÑA.getText().toString().trim().length()>0));            }
+        });
+
+        ED_AUTOR.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                BT_INSERTA.setEnabled(((ED_TITULO.getText().toString().trim().length()>0 && ED_AUTOR.getText().toString().trim().length()>0) && !LEIDO.isChecked())
+                        ||((ED_TITULO.getText().toString().trim().length()>0 && ED_AUTOR.getText().toString().trim().length()>0) && LEIDO.isChecked() && ED_RESEÑA.getText().toString().trim().length()>0));            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                BT_INSERTA.setEnabled(((ED_TITULO.getText().toString().trim().length()>0 && ED_AUTOR.getText().toString().trim().length()>0) && !LEIDO.isChecked())
+                        ||((ED_TITULO.getText().toString().trim().length()>0 && ED_AUTOR.getText().toString().trim().length()>0) && LEIDO.isChecked() && ED_RESEÑA.getText().toString().trim().length()>0));
+            }
+        });
+
+        ED_RESEÑA.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                BT_INSERTA.setEnabled(((ED_TITULO.getText().toString().trim().length()>0 && ED_AUTOR.getText().toString().trim().length()>0) && !LEIDO.isChecked())
+                        ||((ED_TITULO.getText().toString().trim().length()>0 && ED_AUTOR.getText().toString().trim().length()>0) && LEIDO.isChecked() && ED_RESEÑA.getText().toString().trim().length()>0));            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                BT_INSERTA.setEnabled(((ED_TITULO.getText().toString().trim().length()>0 && ED_AUTOR.getText().toString().trim().length()>0) && !LEIDO.isChecked())
+                        ||((ED_TITULO.getText().toString().trim().length()>0 && ED_AUTOR.getText().toString().trim().length()>0) && LEIDO.isChecked() && ED_RESEÑA.getText().toString().trim().length()>0));            }
+        });
+
 
         BT_IMAGEN.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,10 +159,12 @@ public class NuevoLibroActivity extends AppCompatActivity {
                 if(switchState) {
                     description.setVisibility(View.VISIBLE);
                     ratingBar.setVisibility(View.VISIBLE);
+                    BT_INSERTA.setEnabled(ED_RESEÑA.getText().toString().trim().length()>0);
 
                 }else{
                     description.setVisibility(View.GONE);
                     ratingBar.setVisibility(View.GONE);
+                    BT_INSERTA.setEnabled(true);
                 }
             }
         });
@@ -141,11 +210,11 @@ public class NuevoLibroActivity extends AppCompatActivity {
 
     private void guarda(){
 
-        final EditText ED_TITULO = this.findViewById( R.id.edTitulo );
-        final EditText ED_AUTOR = this.findViewById( R.id.edAutor );
-        final Switch LEIDO = this.findViewById(R.id.switchRead);
+        ED_TITULO = this.findViewById( R.id.edTitulo );
+        ED_AUTOR = this.findViewById( R.id.edAutor );
+        LEIDO = this.findViewById(R.id.switchRead);
         final RatingBar PUNTUACION = this.findViewById(R.id.ratingBar);
-        final EditText ED_RESEÑA = this.findViewById(R.id.edReseña);
+        ED_RESEÑA = this.findViewById(R.id.edReseña);
 
         //final EditText ED_IMAGEN = this.findViewById( R.id.edImagen );
 
@@ -158,12 +227,11 @@ public class NuevoLibroActivity extends AppCompatActivity {
 
         DATOS.putExtra("genero", GENERO);
         DATOS.putExtra("leido", LEIDO.isChecked());
-
         if(estaImagen) {
             DATOS.putExtra("imagen", path);
             //SaveImage(bitmap);
         }else{
-            DATOS.putExtra("imagen", "/storage/emulated/0/Download/438.gif");
+            DATOS.putExtra("imagen", "null");
         }
         if(LEIDO.isChecked()){
             DATOS.putExtra("puntuacion", PUNTUACION.getRating());
@@ -172,6 +240,9 @@ public class NuevoLibroActivity extends AppCompatActivity {
             DATOS.putExtra("puntuacion", 20);
             DATOS.putExtra("reseña", "");
         }
+
+
+
         this.setResult( Activity.RESULT_OK, DATOS );
         this.finish();
     }

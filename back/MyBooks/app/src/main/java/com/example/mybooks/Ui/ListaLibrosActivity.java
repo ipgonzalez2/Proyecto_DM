@@ -121,8 +121,6 @@ public class ListaLibrosActivity extends AppCompatActivity {
 
         this.registerForContextMenu( LV_LIBROS );
 
-        // Actualiza la vista
-        this.muestraEstado();
     }
 
 
@@ -134,8 +132,6 @@ public class ListaLibrosActivity extends AppCompatActivity {
         this.dbManager = new DBManager( this.getApplicationContext() );
 
         this.adaptador.changeCursor( this.dbManager.getAllCursor() );
-
-        this.muestraEstado();
     }
 
     @Override
@@ -349,18 +345,6 @@ public class ListaLibrosActivity extends AppCompatActivity {
         int id = CURSOR.getInt( CURSOR.getColumnIndexOrThrow( dbManager.CAMPO_ID ) );
         this.dbManager.borra( id );
         this.adaptador.changeCursor( this.dbManager.getAllCursor() );
-
-        this.muestraEstado();
-    }
-
-    private void muestraEstado()
-    {
-        final TextView LBL_PRACTICAS = this.findViewById( R.id.lblLibros );
-
-        LBL_PRACTICAS.setText(
-                Integer.toString( this.adaptador.getCount() )
-                        + " tarea(s)."
-        );
     }
 
     private void ver(int possition, int funcion){

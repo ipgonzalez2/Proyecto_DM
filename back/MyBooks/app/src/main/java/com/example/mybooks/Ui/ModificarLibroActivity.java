@@ -10,6 +10,8 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -37,6 +39,7 @@ public class ModificarLibroActivity extends AppCompatActivity {
     Bitmap bitmap;
     boolean estaImagen;
     ImageButton imagen;
+    EditText ED_RESEÑA;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,7 +47,7 @@ public class ModificarLibroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editar_libro);
         final Intent datos = this.getIntent();
-         imagen = this.findViewById(R.id.btImagen);
+        imagen = this.findViewById(R.id.btImagen);
         TextView titulo = this.findViewById(R.id.edTitulo);
         TextView autor = this.findViewById(R.id.edAutor);
         TextView genero = this.findViewById(R.id.edTematica);
@@ -69,6 +72,25 @@ public class ModificarLibroActivity extends AppCompatActivity {
             puntuacion.setRating(Float.parseFloat(datos.getExtras().getString("puntuacion")));
         }
 
+        final Button modificar = this.findViewById(R.id.btModificaLibro);
+        ED_RESEÑA = this.findViewById(R.id.edReseña);
+
+        ED_RESEÑA.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                modificar.setEnabled(ED_RESEÑA.getText().toString().trim().length()>0);
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                modificar.setEnabled(ED_RESEÑA.getText().toString().trim().length()>0);}
+        });
+
         liLeido.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -83,10 +105,12 @@ public class ModificarLibroActivity extends AppCompatActivity {
                 if(switchState) {
                     description.setVisibility(View.VISIBLE);
                     ratingBar.setVisibility(View.VISIBLE);
+                    modificar.setEnabled(ED_RESEÑA.getText().toString().trim().length()>0);
 
                 }else{
                     description.setVisibility(View.GONE);
                     ratingBar.setVisibility(View.GONE);
+                    modificar.setEnabled(true);
                 }
             }
         });
@@ -102,7 +126,6 @@ public class ModificarLibroActivity extends AppCompatActivity {
             }
         });
 
-        Button modificar = this.findViewById(R.id.btModificaLibro);
         modificar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -164,7 +187,6 @@ public class ModificarLibroActivity extends AppCompatActivity {
         final TextView ED_AUTOR = this.findViewById( R.id.edAutor );
         final Switch LEIDO = this.findViewById(R.id.switchRead);
         final RatingBar PUNTUACION = this.findViewById(R.id.ratingBar);
-        final EditText ED_RESEÑA = this.findViewById(R.id.edReseña);
 
         //final EditText ED_IMAGEN = this.findViewById( R.id.edImagen );
 
