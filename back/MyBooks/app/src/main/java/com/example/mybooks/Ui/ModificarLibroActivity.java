@@ -110,6 +110,14 @@ public class ModificarLibroActivity extends AppCompatActivity {
                 ModificarLibroActivity.this.guarda();
             }
         });
+        Button cancelar = this.findViewById(R.id.btCancelaModificar);
+
+        cancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ModificarLibroActivity.this.finish();
+            }
+        });
     }
 
 
