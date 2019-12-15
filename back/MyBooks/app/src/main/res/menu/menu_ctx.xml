@@ -2,6 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/opModifica"
-        android:title="Modificar" />
-    <item android:id="@+id/opBorra" android:title="Borrar" />
+        android:title="@string/lbl_opModificar" />
+    <item android:id="@+id/opBorra" android:title="@string/lbl_opBorrar" />
 </menu>

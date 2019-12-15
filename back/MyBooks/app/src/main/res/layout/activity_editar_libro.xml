@@ -48,7 +48,7 @@
                         android:drawableStart="@drawable/book"
                         android:drawableTint="@color/colorPrimary"
                         android:ems="10"
-                        android:hint="Introduce el nombre del libro"
+                        android:hint="@string/lbl_hintTitulo"
                         android:inputType="text"
                         android:paddingLeft="20dp"
                         android:textAlignment="center" />
@@ -68,7 +68,7 @@
                         android:drawableStart="@drawable/writer"
                         android:drawableTint="@color/colorPrimary"
                         android:ems="10"
-                        android:hint="Introduce de el/la escritor/a "
+                        android:hint="@string/lbl_hintAutor"
                         android:inputType="text"
                         android:paddingLeft="20dp"
                         android:textAlignment="center" />
@@ -103,7 +103,7 @@
                         android:drawableTint="@color/colorPrimary"
                         android:paddingLeft="20dp"
                         android:paddingRight="20dp"
-                        android:text="Libro leido"
+                        android:text="@string/lbl_Leido"
                         android:textAlignment="center" />
                 </LinearLayout>
 
@@ -122,7 +122,7 @@
                         android:drawableStart="@drawable/pencil"
                         android:drawableTint="@color/colorPrimary"
                         android:ems="10"
-                        android:hint="Introduce de el/la escritor/a "
+                        android:hint="@string/lbl_reseña"
                         android:inputType="textMultiLine"
                         android:paddingLeft="20dp"
                         android:paddingRight="20dp"
@@ -171,7 +171,7 @@
                         android:layout_marginBottom="20dp"
                         android:background="@drawable/mybuttoncreate"
                         android:backgroundTintMode="add"
-                        android:text="Añadir libro" />
+                        android:text="@string/lbl_Editar" />
 
                     <Button
                         android:id="@+id/btCancelaInsercion"
@@ -182,7 +182,7 @@
                         android:layout_marginRight="20dp"
                         android:background="@drawable/mybuttoncreate"
                         android:backgroundTintMode="add"
-                        android:text="Cancelar" />
+                        android:text="@string/lbl_cancelar" />
 
                 </LinearLayout>
 

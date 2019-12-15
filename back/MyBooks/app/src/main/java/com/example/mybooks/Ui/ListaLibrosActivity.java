@@ -88,8 +88,8 @@ public class ListaLibrosActivity extends AppCompatActivity {
                 this,
                 R.layout.entrada_libro,
                 null,
-                new String[]{ DBManager.CAMPO_TITULO, DBManager.CAMPO_AUTOR,DBManager.CAMPO_IMAGEN },
-                new int[]{ R.id.lblTitulo, R.id.lblAutor, R.id.bookImage }
+                new String[]{ DBManager.CAMPO_TITULO, DBManager.CAMPO_AUTOR,DBManager.CAMPO_IMAGEN, DBManager.CAMPO_PUNTUACION },
+                new int[]{ R.id.lblTitulo, R.id.lblAutor, R.id.bookImage, R.id.puntuacion }
         );
 
         adaptador.setFilterQueryProvider(new FilterQueryProvider() {

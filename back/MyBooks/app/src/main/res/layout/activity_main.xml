@@ -29,7 +29,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="60dp"
                     android:fontFamily="@font/days_one"
-                    android:text="MyBooks"
+                    android:text="@string/title"
                     android:textAlignment="center"
                     android:textColor="#FFFFFF"
                     android:textSize="50sp" />
@@ -52,7 +52,7 @@
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/mybutton"
                 android:backgroundTintMode="add"
-                android:text="Mi lista" />
+                android:text="@string/lbl_miLista" />
 
             <Button
                 android:id="@+id/btInsertaPrincipal"
@@ -62,7 +62,7 @@
                 android:background="@drawable/mybutton"
                 android:backgroundTintMode="add"
 
-                android:text="Añadir libro" />
+                android:text="@string/lbl_opSalir" />
 
         </LinearLayout>
     </LinearLayout>

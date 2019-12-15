@@ -162,7 +162,7 @@
                         android:layout_marginBottom="20dp"
                         android:background="@drawable/mybuttoncreate"
                         android:backgroundTintMode="add"
-                        android:text="Atrás" />
+                        android:text="@string/lbl_atras" />
 
                 </LinearLayout>
 

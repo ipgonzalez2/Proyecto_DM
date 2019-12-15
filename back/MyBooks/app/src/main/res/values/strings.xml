@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">MyBooks</string>
+    <string name="lbl_opModificar">Modificar</string>
+    <string name="lbl_opBorrar">Borrar</string>
+    <string name="lbl_opTodos">Ver todos</string>
+    <string name="lbl_opLeidos">Ver leídos</string>
+    <string name="lbl_opPendientes">Ver pendientes</string>
+    <string name="lbl_opResumen">Mi resumen</string>
+    <string name="lbl_opSalir">Salir</string>
+    <string name="lbl_hintTitulo">Introduce el nombre del libro</string>
+    <string name="lbl_hintAutor">Introduce de el/la escritor/a</string>
+    <string name="lbl_Leido">Libro leido</string>
+    <string name="lbl_reseña">Introduce la reseña</string>
+    <string name="lbl_Editar">Editar libro</string>
+    <string name="lbl_cancelar">Cancelar</string>
+    <string name="title">MyBooks</string>
+    <string name="lbl_miLista">Mi lista</string>
+    <string name="lbl_Insertar">Añadir libro</string>
+    <string name="lbl_atras">Atrás</string>
+    <string name="lbl_resumen">Mi resumen</string>
+    <string name="lbl_buscar">Introduce el libro/autor que deseas buscar</string>
 </resources>
