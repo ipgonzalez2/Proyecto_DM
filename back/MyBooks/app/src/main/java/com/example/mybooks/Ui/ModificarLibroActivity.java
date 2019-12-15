@@ -106,7 +106,6 @@ public class ModificarLibroActivity extends AppCompatActivity {
         modificar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(ModificarLibroActivity.this,"modificar", Toast.LENGTH_LONG).show();
                 ModificarLibroActivity.this.guarda();
             }
         });
@@ -180,7 +179,6 @@ public class ModificarLibroActivity extends AppCompatActivity {
         DATOS.putExtra("genero", GENERO.getText().toString());
         DATOS.putExtra("leido", LEIDO.isChecked());
         DATOS.putExtra("id",datos.getExtras().getInt("id"));
-        Toast.makeText(ModificarLibroActivity.this, "siguen siento"+datos.getExtras().getString("imagen"),Toast.LENGTH_LONG).show();
 
         if(estaImagen) {
             DATOS.putExtra("imagen", path);

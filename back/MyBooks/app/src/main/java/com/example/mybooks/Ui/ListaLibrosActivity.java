@@ -305,7 +305,6 @@ public class ListaLibrosActivity extends AppCompatActivity {
                             data.getExtras().getFloat("puntuacion"));
 
             this.dbManager.guarda( LIBRO_NUEVO );
-            //Toast.makeText(this, data.getExtras().getString("imagen"),Toast.LENGTH_LONG).show();
         }else{
             if(requestCode == RC_MODIFICAR_LIBRO
                     && resultCode == Activity.RESULT_OK){
@@ -396,19 +395,15 @@ public class ListaLibrosActivity extends AppCompatActivity {
             myIntent.putExtra("genero",genero);
             myIntent.putExtra("leido",leido);
 
-            Toast.makeText(ListaLibrosActivity.this, "noelias" +id,Toast.LENGTH_LONG).show();
-            Toast.makeText(ListaLibrosActivity.this, "la" +myIntent.getExtras().getString("imagen"),Toast.LENGTH_LONG).show();
-
             if(leido == 1){
                 String reseña = cursor.getString(6);
                 String puntuacion = cursor.getString(7);
                 myIntent.putExtra("reseña",reseña);
                 myIntent.putExtra("puntuacion",puntuacion);
-                Toast.makeText(ListaLibrosActivity.this, puntuacion, Toast.LENGTH_LONG).show();
+                
             }
 
 
-            //Toast.makeText(ListaLibrosActivity.this, puntuacion, Toast.LENGTH_LONG).show();
             if(funcion == 0){
                 ListaLibrosActivity.this.startActivity(myIntent);
             }else{
